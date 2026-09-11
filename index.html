@@ -1,0 +1,2253 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Huyền - Graduation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root{
+    --serif: 'Cormorant Garamond', serif;
+    --sans: 'Manrope', sans-serif;
+    --cream: #f4efe9;
+    --cream-dim: rgba(244,239,233,0.75);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{
+    height:100%;
+    font-family: var(--sans);
+    background:#0b0e1a;
+  }
+  #app{
+    position:relative;
+    width:100%;
+    height:100vh;
+    height:100dvh;
+    overflow:hidden;
+    background:#0b0e1a;
+  }
+  .screen{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    justify-content:safe center;
+    padding:48px 32px;
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(16px);
+    transition:opacity .5s ease, transform .5s ease;
+    text-align:center;
+    color:var(--cream);
+    overflow-y:auto;
+  }
+  .screen.active{
+    opacity:1;
+    pointer-events:auto;
+    transform:translateY(0);
+  }
+
+  /* ---------- M00 ---------- */
+  #m00{
+    background:#0b0e1a; /* màu dự phòng khi video chưa load xong */
+  }
+
+  /* ========================================================
+     VIDEO NỀN - dùng chung cho MỌI màn hình.
+     Cách dùng: thêm 1 thẻ <video class="screen-bg-video"> làm
+     PHẦN TỬ ĐẦU TIÊN bên trong bất kỳ div class="screen" nào,
+     video sẽ tự động nằm phủ kín phía sau toàn bộ nội dung màn đó.
+     ========================================================= */
+  .screen-bg-video{
+
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-1;
+    pointer-events:none;
+  }
+
+  .m00-title{
+    font-family: var(--serif);
+    font-weight:500;
+    font-size:44px;
+    line-height:1.25;
+    letter-spacing:0.5px;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.35);
+  }
+  .m00-scroll{
+    position:absolute;
+    bottom:40px;
+    font-size:22px;
+    color:var(--cream-dim);
+    animation: bob 1.8s ease-in-out infinite;
+  }
+  @keyframes bob{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(8px); }
+  }
+  @keyframes starBob{
+  0%,100%{ transform:translateX(-50%) translateY(0); }
+  50%{ transform:translateX(-50%) translateY(8px); }
+}
+
+  /* ---------- M01 ---------- */
+  #m01{
+    background-image: url("https://cdn.cosmos.so/6e772721-23af-4d46-8f3e-6062f4141882?format=webp");
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    background-position: center;
+    background-size: cover;
+    justify-content:flex-start;
+    padding-top: 100px;
+  }
+  .back-btn{
+    position:absolute;
+    top:24px;
+    left:24px;
+    font-size:14px;
+    color:var(--cream-dim);
+    cursor:pointer;
+    letter-spacing:0.5px;
+  }
+  .screen-star{
+    position:absolute;
+    top:24px;
+    left:50%;
+    font-size:20px;
+    color:#e9e6f5;
+    opacity:.9;
+    z-index:2;
+    animation: starBob 1.8s ease-in-out infinite
+  }
+  .m01-heading{
+    font-family: var(--serif);
+    font-weight:600;
+    font-size:24px;
+    letter-spacing:1px;
+    margin-bottom:14px;
+  }
+  .m01-sub{
+    font-size:12px;
+    line-height:1.6;
+    color:var(--cream-dim);
+    max-width:280px;
+    margin-bottom:44px;
+  }
+  .m01-field{
+    width:100%;
+    max-width:300px;
+    text-align:left;
+    margin-bottom:26px;
+  }
+  .m01-label{
+    font-size:13px;
+    letter-spacing:0.5px;
+    color:var(--cream-dim);
+    margin-bottom:8px;
+    display:block;
+  }
+  .m01-input, .m01-select{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid rgba(244,239,233,0.35);
+    color:var(--cream);
+    font-family:var(--sans);
+    font-size:15px;
+    padding:6px 2px 10px 2px;
+    outline:none;
+    -webkit-appearance:none;
+    appearance:none;
+  }
+  .m01-select{
+    cursor:pointer;
+  }
+  .m01-select option{
+    background:#043123;
+    color:var(--cream);
+    font-family:var(--sans);
+  }
+  .m01-input::placeholder{
+    color:rgba(244,239,233,0.3);
+  }
+  .m01-input:focus, .m01-select:focus{
+    border-bottom:1px solid rgba(244,239,233,0.9);
+  }
+  .select-wrap{
+    position:relative;
+  }
+  .select-wrap::after{
+    content:'⌄';
+    position:absolute;
+    right:4px;
+    top:2px;
+    color:var(--cream-dim);
+    font-size:16px;
+    pointer-events:none;
+  }
+
+  .primary-btn{
+    margin-top:18px;
+    background:transparent;
+    border:1px solid rgba(244,239,233,0.55);
+    color:var(--cream);
+    font-family:var(--sans);
+    letter-spacing:2px;
+    font-size:13px;
+    padding:13px 34px;
+    border-radius:2px;
+    cursor:pointer;
+    transition: background .25s ease, opacity .25s ease;
+  }
+  .primary-btn:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+  }
+  .primary-btn:not(:disabled):hover{
+    background:rgba(244,239,233,0.1);
+  }
+
+  /* ---------- M02 ---------- */
+  #m02{
+    
+    background-image: url("https://i.pinimg.com/originals/34/a8/39/34a839b2cb4484b428219dc260e03db1.gif");
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    Background-position: center;
+    background-size: cover;
+    justify-content:flex-start;
+    padding-top:100px;
+  }
+  .content-glass{
+ background: rgba(41, 18, 26, 0.55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
+  border-radius:16px;
+  padding:28px 32px;
+  max-width:560px;
+}
+  .m02-heading{
+    font-family: var(--serif);
+    font-weight:600;
+    font-size:26px;
+    letter-spacing:1px;
+    margin-bottom:6px;
+  }
+  .m02-underline{
+    width:100px;
+    height:1px;
+    background:rgba(30, 27, 25, 0.05);
+    margin:14px 0 30px 0;
+  }
+  .m02-body{
+    font-size:14px;
+    line-height:1.9;
+    color:var(--cream-dim);
+    max-width:500px;
+    text-align:left;
+  }
+  .m02-heart{
+    margin-top:36px;
+    font-size:16px;
+    color:var(--cream-dim);
+    animation: bob 1.8s ease-in-out infinite
+  }
+
+  /* ---------- M03 ---------- */
+  #m03{
+    /* THAY ẢNH NỀN Ở ĐÂY: đổi background bên dưới thành ảnh Figma của bạn */
+    background-image: url("images/m03-bg.png");
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    Background-position: center;
+    background-size: cover;
+  }
+  .m03-eyebrow{
+    font-size:12px;
+    letter-spacing:3px;
+    color:var(--cream-dim);
+    margin-bottom:18px;
+  }
+  .m03-name{
+    font-family: var(--serif);
+    font-weight:500;
+    font-size:46px;
+    line-height:1.15;
+    letter-spacing:1px;
+    margin-bottom:18px;
+  }
+  .m03-sub{
+    font-size:11px;
+    letter-spacing:3px;
+    color:var(--cream-dim);
+    margin-bottom:44px;
+  }
+  .m03-especially{
+    font-size:14px;
+    color:var(--cream-dim);
+    margin-bottom:6px;
+    font-style:italic;
+  }
+  .m03-guest{
+    font-family: var(--serif);
+    font-size:20px;
+    margin-bottom:44px;
+  }
+
+  /* ---------- M04 ---------- */
+  #m04{
+    /* THAY ẢNH NỀN Ở ĐÂY: đổi background bên dưới thành ảnh Figma của bạn */
+    background-image: url("images/image 25.png");
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    Background-position: center;
+    background-size: cover;
+    justify-content:flex-start;
+    padding-top:64px;
+  }
+  .m04-heading{
+    font-family: var(--serif);
+    font-weight:600;
+    font-size:22px;
+    letter-spacing:1px;
+    margin-bottom:12px;
+  }
+  .m04-sub{
+    font-size:13px;
+    color:var(--cream-dim);
+    margin-bottom:33px;
+  }
+  .m04-options{
+    width:100%;
+    max-width:320px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:28px;
+  }
+  .m04-option{
+    text-align:left;
+    border:1px solid rgba(244,239,233,0.2);
+    border-radius:6px;
+    padding:14px 14px;
+    cursor:pointer;
+    transition: border-color .2s ease, background .2s ease;
+  }
+  .m04-option:hover{
+    border-color: rgba(244,239,233,0.6);
+    background: rgba(244,239,233,0.1);
+  }
+  .m04-option .opt-num{
+    font-size:11px;
+    color:var(--cream-dim);
+    margin-bottom:4px;
+  }
+  .m04-option .opt-text{
+    font-size:13.5px;
+    line-height:1.5;
+  }
+  .m04-option.selected{
+    border-color:rgba(244,239,233,0.85);
+    background:rgba(244,239,233,0.06);
+  }
+  .m04-note{
+    font-size:12px;
+    color:var(--cream-dim);
+    margin-top:3px;
+    max-width:280px;
+  }
+
+  /* ---------- Nền watercolor dùng chung (Option 1 branch) ---------- */
+  .bg-blue-monet{
+    /* THAY ẢNH NỀN Ở ĐÂY: đổi thành ảnh tranh nước xanh của bạn */
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(90,110,150,0.35), transparent 55%),
+      radial-gradient(ellipse at 80% 80%, rgba(70,90,120,0.3), transparent 60%),
+      linear-gradient(180deg, #1c2440 0%, #171d38 50%, #10142a 100%);
+  }
+  .bg-pink-monet{
+    /* THAY ẢNH NỀN Ở ĐÂY: đổi thành ảnh tranh nước hồng của bạn */
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(200,160,180,0.3), transparent 55%),
+      radial-gradient(ellipse at 80% 80%, rgba(170,140,180,0.25), transparent 60%),
+      linear-gradient(180deg, #4a3550 0%, #3a2c46 50%, #2a2138 100%);
+  }
+
+  /* ---------- M05-1 ---------- */
+  #m05-1{ 
+    background-image: url("images/m05-1-bg.png");
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    Background-position: center;
+    background-size: cover;
+    justify-content:flex-start; 
+    padding-top:56px; 
+  }
+  .m05-card{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:32px 24px;
+  }
+  .m05-heading{
+    font-family: var(--serif);
+    font-weight:600;
+    font-size:22px;
+    letter-spacing:0.5px;
+    margin-bottom:24px;
+    max-width:260px;
+  }
+  .m05-day{
+    font-family: var(--serif);
+    font-size:56px;
+    line-height:1;
+    margin-bottom:6px;
+  }
+  .m05-month{
+    font-size:13px;
+    letter-spacing:4px;
+    color:var(--cream-dim);
+    margin-bottom:2px;
+  }
+  .m05-year{
+    font-size:24px;
+    font-family: var(--serif);
+    margin-bottom:14px;
+  }
+  .m05-time{
+    font-size:14px;
+    color:var(--cream-dim);
+    margin-bottom:20px;
+  }
+  .m05-divider{
+    width:60px;
+    height:1px;
+    background:rgba(244,239,233,0.35);
+    margin-bottom:20px;
+  }
+  .m05-venue{
+    font-family: var(--serif);
+    font-size:16px;
+    letter-spacing:0.5px;
+    margin-bottom:4px;
+  }
+  .m05-address{
+    font-size:11.5px;
+    color:var(--cream-dim);
+    letter-spacing:0.5px;
+    margin-bottom:20px;
+  }
+  .m05-desc{
+    font-size:13px;
+    color:var(--cream-dim);
+    max-width:260px;
+    line-height:1.7;
+    margin-bottom:26px;
+  }
+  .secondary-btn{
+    background:rgba(244,239,233,0.9);
+    color:#20232f;
+    border:none;
+    font-family:var(--sans);
+    letter-spacing:1px;
+    font-size:12px;
+    padding:11px 26px;
+    border-radius:2px;
+    cursor:pointer;
+    margin-bottom:22px;
+  }
+  .save-link{
+    position:absolute;
+    bottom:20px;
+    right:24px;
+    font-size:11px;
+    color:var(--cream-dim);
+    cursor:pointer;
+  }
+
+  /* ---------- M05-3 (2 sự kiện) ---------- */
+  .m05-3-events{
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    max-width:320px;
+  }
+  .m05-event-col{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .m05-3-num{
+    font-size:11px;
+    color:var(--cream-dim);
+    align-self:flex-start;
+    margin-bottom:4px;
+  }
+  .m05-3-date{
+    font-family: var(--serif);
+    font-size:20px;
+    letter-spacing:0.5px;
+    margin-bottom:2px;
+  }
+  .m05-3-divider-mobile{
+    width:60px;
+    height:1px;
+    background:rgba(244,239,233,0.35);
+    margin:16px 0;
+    align-self:center;
+  }
+
+  /* ---------- M05-3 (Both events) ---------- */
+  .m05b-note{
+    font-family: var(--serif);
+    font-style:italic;
+    font-size:12px;
+    color:var(--cream-dim);
+    margin-bottom:16px;
+  }
+  .m05b-block{
+    width:100%;
+    max-width:260px;
+    margin-bottom:8px;
+  }
+  .m05b-index{
+    font-size:11px;
+    letter-spacing:1px;
+    color:var(--cream-dim);
+    margin-bottom:8px;
+  }
+  .m05b-date{
+    font-family: var(--serif);
+    font-size:19px;
+    margin-bottom:2px;
+  }
+  .m05b-time{
+    font-size:13px;
+    color:var(--cream-dim);
+    margin-bottom:8px;
+  }
+  .m05b-venue{
+    font-family: var(--serif);
+    font-size:14.5px;
+    margin-bottom:2px;
+  }
+  .m05b-address{
+    font-size:11px;
+    color:var(--cream-dim);
+    margin-bottom:12px;
+  }
+  .secondary-btn-sm{
+    background:rgba(244,239,233,0.9);
+    color:#20232f;
+    border:none;
+    font-family:var(--sans);
+    letter-spacing:0.5px;
+    font-size:11px;
+    padding:8px 18px;
+    border-radius:2px;
+    cursor:pointer;
+  }
+  .m05b-divider{
+    width:100%;
+    max-width:260px;
+    height:1px;
+    background:rgba(244,239,233,0.25);
+    margin:14px 0;
+  }
+
+  /* ---------- M06-1 ---------- */
+  #m06-1{ justify-content:flex-start; padding-top:56px; }
+  .m06-heading{
+    font-family: var(--serif);
+    font-weight:600;
+    font-size:24px;
+    letter-spacing:0.5px;
+    margin-bottom:4px;
+  }
+  .m06-sub{
+    font-size:13px;
+    color:var(--cream-dim);
+    margin-bottom:6px;
+    font-style:italic;
+  }
+  .m06-underline{
+    width:60px;
+    height:1px;
+    background:rgba(244,239,233,0.35);
+    margin:12px 0 26px 0;
+  }
+  .m06-list{
+    text-align:left;
+    max-width:290px;
+    font-size:13.5px;
+    line-height:1.9;
+    color:var(--cream-dim);
+    margin-bottom:24px;
+  }
+  .m06-list li{
+    margin-bottom:14px;
+    list-style:none;
+    padding-left:14px;
+    position:relative;
+  }
+  .m06-list li::before{
+    content:'•';
+    position:absolute;
+    left:0;
+  }
+  .m06-closing{
+    font-family: var(--serif);
+    font-style:italic;
+    font-size:15px;
+    margin-bottom:30px;
+  }
+
+  /* ---------- M07-1 ---------- */
+  #m07-1, #m07-2, #m07-3{ justify-content:flex-start; padding-top:64px; }
+  .m07-heading{
+    font-family: var(--serif);
+    font-weight:600;
+    font-size:24px;
+    margin-bottom:22px;
+  }
+  .m07-question{
+    font-size:15px;
+    color:var(--cream-dim);
+    max-width:260px;
+    line-height:1.6;
+    margin-bottom:40px;
+  }
+  .choice-btn{
+    width:100%;
+    max-width:300px;
+    background:rgba(244,239,233,0.08);
+    border:1px solid rgba(244,239,233,0.2);
+    color:var(--cream);
+    font-family:var(--sans);
+    font-size:13.5px;
+    padding:14px 20px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-bottom:14px;
+    transition: background .2s ease;
+  }
+  .choice-btn:hover{
+    background:rgba(244,239,233,0.15);
+  }
+
+  /* ---------- M08 (dùng chung cho cả 4 nhánh) ---------- */
+  #m08-1, #m08-2, #m08-3, #m08-r{ justify-content:flex-start; padding-top:56px; }
+  .m08-block{
+    width:100%;
+    max-width:320px;
+    text-align:left;
+  }
+  .m08-heading{
+    font-family: var(--serif);
+    font-weight:600;
+    font-size:22px;
+    margin-bottom:4px;
+  }
+  .m08-underline{
+    width:60px;
+    height:1px;
+    background:rgba(244,239,233,0.35);
+    margin:10px 0 24px 0;
+  }
+  .m08-textarea-wrap{
+    position:relative;
+    width:100%;
+    flex:1;
+    min-height:280px;
+    background:rgba(244,239,233,0.08);
+    border:1px solid rgba(244,239,233,0.2);
+    border-radius:8px;
+    display:flex;
+    flex-direction:column;
+    padding:16px;
+  }
+  .m08-textarea{
+    width:100%;
+    flex:1;
+    background:transparent;
+    border:none;
+    color:var(--cream);
+    font-family:var(--sans);
+    font-size:13.5px;
+    line-height:1.7;
+    padding:0;
+    resize:none;
+    outline:none;
+  }
+  .m08-textarea::placeholder{
+    color:rgba(244,239,233,0.45);
+  }
+  .m08-photo-btn{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:rgba(244,239,233,0.9);
+    color:#3a2c46;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+    cursor:pointer;
+    border:none;
+    flex-shrink:0;
+  }
+  .m08-preview-wrap{
+    position:relative;
+    display:none;
+    margin-top:10px;
+  }
+  .m08-preview{
+    display:block;
+    width:52px;
+    height:52px;
+    object-fit:cover;
+    border-radius:6px;
+  }
+  .m08-preview-remove{
+    position:absolute;
+    top:-6px;
+    right:-6px;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:#2a2138;
+    border:1px solid rgba(244,239,233,0.5);
+    color:var(--cream);
+    font-size:11px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    padding:0;
+  }
+  .m08-bottom-row{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    margin-top:auto;
+  }
+  .m08-tool-btn{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:rgba(244,239,233,0.9);
+    color:#3a2c46;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    cursor:pointer;
+    border:none;
+    flex-shrink:0;
+    margin-left:8px;
+  }
+  .m08-tool-btn.active{
+    background:#f4efe9;
+    box-shadow:0 0 0 2px rgba(244,239,233,0.4);
+  }
+  .m08-tools-group{
+    display:flex;
+    align-items:center;
+  }
+
+  /* ---------- Khung vẽ tay cho lời chúc ---------- */
+  .m08-draw-panel{
+    display:none;
+    width:100%;
+    margin-top:12px;
+  }
+  .m08-draw-canvas-wrap{
+    position:relative;
+    width:100%;
+    aspect-ratio: 4 / 3;
+    background:rgba(244,239,233,0.06);
+    border:1px solid rgba(244,239,233,0.25);
+    border-radius:8px;
+    overflow:hidden;
+    touch-action:none;
+  }
+  .m08-draw-canvas-wrap canvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    cursor:crosshair;
+  }
+  .m08-draw-toolbar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:10px;
+    flex-wrap:wrap;
+  }
+  .m08-color-dot{
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    border:2px solid transparent;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .m08-color-dot.active{
+    border-color:var(--cream);
+  }
+  .m08-color-custom{
+    width:22px;
+    height:22px;
+    border:none;
+    padding:0;
+    border-radius:50%;
+    cursor:pointer;
+    background:none;
+    flex-shrink:0;
+  }
+  .m08-draw-clear{
+    margin-left:auto;
+    font-size:11.5px;
+    color:var(--cream-dim);
+    background:transparent;
+    border:1px solid rgba(244,239,233,0.3);
+    border-radius:12px;
+    padding:5px 12px;
+    cursor:pointer;
+  }
+
+  /* ---------- M09 (Final Thank You) ---------- */
+  .m09-heading{
+    font-family: var(--serif);
+    font-weight:600;
+    font-size:26px;
+    text-decoration:underline;
+    text-underline-offset:6px;
+    margin-bottom:26px;
+  }
+  .m09-body{
+    font-size:14px;
+    color:var(--cream-dim);
+    max-width:280px;
+    line-height:1.8;
+    margin-bottom:30px;
+  }
+  .m09-event{
+    font-family: var(--serif);
+    font-size:20px;
+    margin-bottom:6px;
+  }
+  .m09-datetime{
+    font-size:14px;
+    color:var(--cream-dim);
+    margin-bottom:40px;
+  }
+  .m09-signature{
+    font-family: var(--serif);
+    font-style:italic;
+    font-size:14px;
+    color:var(--cream-dim);
+  }
+
+  .toast{
+    position:fixed;
+    bottom:24px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:rgba(20,24,44,0.95);
+    color:var(--cream);
+    font-size:13px;
+    padding:10px 18px;
+    border-radius:6px;
+    border:1px solid rgba(244,239,233,0.15);
+    opacity:0;
+    transition:opacity .3s ease, transform .3s ease;
+    pointer-events:none;
+    z-index:999;
+  }
+  .toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+  }
+
+  /* ========================================================
+     HIỆU ỨNG MARQUEE khi hover - áp dụng cho các nút có viền
+     (primary-btn, choice-btn). Ý tưởng: giữ 1 span vô hình để
+     đo đúng chiều rộng nút (không đổi layout hiện tại), rồi
+     phủ 2 lớp chữ lên trên: 1 lớp tĩnh, 1 lớp chạy marquee khi hover.
+     ========================================================= */
+  .btn-marquee{
+    position:relative;
+    overflow:hidden;
+  }
+  .btn-marquee .btn-label-sizer{
+    visibility:hidden;
+    white-space:nowrap;
+  }
+  .btn-marquee .btn-label,
+  .btn-marquee .btn-label-marquee{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    white-space:nowrap;
+    transition:opacity 0.2s ease;
+  }
+  .btn-marquee .btn-label-marquee{
+    opacity:0;
+    animation: btnMarquee 1s linear infinite;
+    animation-play-state:paused;
+    text-shadow:
+      currentColor var(--btn-spacing, 6em) 0,
+      currentColor calc(var(--btn-spacing, 6em) * -1) 0,
+      currentColor calc(var(--btn-spacing, 6em) * -2) 0;
+  }
+  .btn-marquee:hover .btn-label-marquee{
+    opacity:1;
+    animation-play-state:running;
+  }
+  .btn-marquee:hover .btn-label{
+    opacity:0;
+  }
+  @keyframes btnMarquee{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(var(--btn-spacing, 6em)); }
+  }
+
+  /* ========================================================
+     RESPONSIVE - Máy tính / màn hình rộng
+     Nền luôn phủ full chiều rộng trình duyệt.
+     Nội dung (chữ, nút) được giới hạn chiều rộng để dễ đọc,
+     căn giữa, và co giãn để vừa trong 1 màn hình, hạn chế cuộn.
+     ========================================================= */
+  @media (min-width: 720px){
+    .screen{
+      padding:36px 40px;
+    }
+
+    .m00-title{ font-size:72px; white-space:nowrap; }
+    .screen-star{ font-size:26px; top:32px; }
+    .m00-scroll{ font-size:24px; }
+
+    .m01-heading{ font-size:28px; }
+    .m01-sub{ font-size:15px; max-width:400px; margin-bottom:30px; }
+    .m01-field{ max-width:360px; margin-bottom:20px; }
+    .m01-input, .m01-select{ font-size:16px; }
+    .m01-label{ font-size:12.5px; }
+
+    .m02-heading{ font-size:38px; }
+    .m02-body{ font-size:19px; max-width:560px; line-height:1.85; }
+    .m02-underline{ margin:16px 0 30px 0; }
+    .m02-underline{ margin:10px 0 20px 0; }
+    .m02-heart{ margin-top:20px; }
+
+    .m03-eyebrow{ font-size:13px; letter-spacing:3px; margin-bottom:14px; }
+    .m03-name{ font-size:58px; white-space:nowrap; margin-bottom:14px; }
+    .m03-sub{ font-size:12px; margin-bottom:30px; }
+    .m03-especially{ font-size:15px; margin-bottom:4px; }
+    .m03-guest{ font-size:22px; margin-bottom:30px; }
+
+    .m04-heading{ font-size:36px; margin-bottom:10px; }
+    .m04-sub{ font-size:16px; margin-bottom:28px; }
+    .m04-options{ max-width:480px; gap:12px; margin-bottom:22px; }
+    .m04-option{ padding:16px 20px; }
+    .m04-option .opt-text{ font-size:16px; }
+
+    .m05-heading{ font-size:24px; max-width:none; white-space:nowrap; margin-bottom:16px; }
+    .m05-day{ font-size:60px; }
+    .m05-year{ font-size:22px; }
+    .m05-time{ margin-bottom:14px; }
+    .m05-venue{ font-size:18px; }
+    .m05-address{ font-size:13px; margin-bottom:14px; }
+    .m05-desc{ font-size:14px; max-width:360px; margin-bottom:18px; }
+
+    .m05-3-events{
+      flex-direction:row;
+      max-width:640px;
+      gap:36px;
+      align-items:flex-start;
+    }
+    .m05-event-col{ flex:1; }
+    .m05-3-date{ font-size:30px; margin-bottom:6px; }
+    .m05-3-divider-mobile{ display:none; }
+    .m06-heading{ font-size:26px; }
+    .m06-list{ max-width:420px; font-size:14.5px; line-height:1.7; margin-bottom:18px; }
+    .m06-list li{ margin-bottom:10px; }
+    .m06-closing{ font-size:16px; margin-bottom:20px; }
+
+    .m07-heading{ font-size:36px; margin-bottom:20px; }
+    .m07-question{ font-size:18px; max-width:460px; margin-bottom:34px; }
+    .choice-btn{ max-width:480px; font-size:15.5px; padding:16px 24px; margin-bottom:12px; }
+
+    .m08-heading{ font-size:24px; }
+    .m08-textarea-wrap{ max-width:420px; min-height:240px; }
+
+    .m09-heading{ font-size:28px; margin-bottom:18px; }
+    .m09-body{ font-size:15px; max-width:380px; margin-bottom:22px; }
+    .m09-event{ font-size:21px; }
+    .m09-datetime{ font-size:15px; margin-bottom:26px; }
+
+    .primary-btn, .secondary-btn{
+      font-size:13.5px;
+      padding:13px 34px;
+      margin-top:14px;
+    }
+  }
+
+  @media (min-width: 720px) and (max-height: 800px){
+    .screen{ padding:20px 40px; }
+    .m00-title{ font-size:44px; }
+    .m03-name{ font-size:46px; }
+    .m05-heading{ font-size:19px; margin-bottom:8px; }
+    .m05-day{ font-size:42px; }
+    .m05-year{ font-size:18px; }
+    .m05-time{ margin-bottom:8px; }
+    .m05-divider{ margin-bottom:10px; }
+    .m05-venue{ font-size:15px; }
+    .m05-address{ font-size:11.5px; margin-bottom:8px; }
+    .m05-desc{ font-size:12.5px; margin-bottom:10px; }
+    .secondary-btn{ margin-bottom:12px; padding:9px 22px; }
+    .m07-heading{ font-size:26px; margin-bottom:10px; }
+    .m07-question{ margin-bottom:18px; }
+    .m04-heading{ font-size:26px; }
+    .m04-sub{ margin-bottom:16px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- M00 - Intro -->
+  <div class="screen active" id="m00">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m00-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/cosmos_636432527.mp4" type="video/mp4">
+    </video>
+    <div class="screen-star">✦</div>
+    <div class="m00-title">A NEW CHAPTER<br>BEGINS</div>
+    <div class="m00-scroll">↓</div>
+  </div>
+
+  <!-- M01 - Who are you -->
+  <div class="screen" id="m01">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m01-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/m01-bg.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m00')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="m01-heading">BEFORE WE BEGIN</div>
+    <div class="m01-sub">Let me get to know you a little better ♡</div>
+
+    <div class="m01-field">
+      <label class="m01-label">What's your name?</label>
+      <input class="m01-input" id="inp-name" type="text" placeholder="">
+    </div>
+
+    <div class="m01-field">
+      <label class="m01-label">What's your phone number?</label>
+      <input class="m01-input" id="inp-phone" type="tel" placeholder="">
+    </div>
+
+    <div class="m01-field">
+      <label class="m01-label">What can I call you?</label>
+      <div class="select-wrap">
+        <select class="m01-select" id="inp-relation">
+          <option value="Anh">Anh</option>
+          <option value="Chị">Chị</option>
+          <option value="Bạn" selected>Bạn</option>
+          <option value="Em">Em</option>
+          <option value="Bố">Bố</option>
+          <option value="Mẹ">Mẹ</option>
+          <option value="Cô">Cô</option>
+          <option value="Dì">Dì</option>
+          <option value="Chú">Chú</option>
+          <option value="Bác">Bác</option>
+          <option value="Ông">Ông</option>
+          <option value="Bà">Bà</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="primary-btn btn-marquee" id="btn-continue" onclick="submitM01()"><span class="btn-label-sizer">TIẾP TỤC</span><span class="btn-label">TIẾP TỤC</span><span class="btn-label-marquee" aria-hidden="true">TIẾP TỤC</span></button>
+  </div>
+
+  <!-- M02 - Lời cảm ơn -->
+ <div class="screen" id="m02">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m02-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/m02-bg.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m01')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="content-glass">
+      <div class="m02-heading">A LITTLE THANK YOU</div>
+      <div class="m02-underline"></div>
+      <div class="m02-body" id="m02-text">
+        <!-- Nội dung sẽ được điền tự động bằng JS -->
+      </div>
+      <div class="m02-heart">♡</div>
+    </div>
+    <button class="primary-btn btn-marquee" style="margin-top:36px;" onclick="renderM03(); goTo('m03')"><span class="btn-label-sizer">TIẾP TỤC</span><span class="btn-label">TIẾP TỤC</span><span class="btn-label-marquee" aria-hidden="true">TIẾP TỤC</span></button>
+  </div>
+
+  <!-- M03 - Hero / Invitation -->
+  <div class="screen" id="m03">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m03-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/M03.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m02')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="content-glass">
+      <div class="m03-eyebrow">YOU'RE INVITED!</div>
+      <div class="m03-name">NGUYỄN<br>HUYỀN</div>
+      <div class="m03-sub">GRADUATION CELEBRATION</div>
+      <div class="m03-especially">Especially you...</div>
+      <div class="m03-guest" id="m03-guest-name"><!-- điền tên bằng JS --></div>
+    </div>
+    <button class="primary-btn btn-marquee" onclick="goTo('m04')"><span class="btn-label-sizer">RSVP</span><span class="btn-label">RSVP</span><span class="btn-label-marquee" aria-hidden="true">RSVP</span></button>
+  </div>
+
+  <!-- M04 - Choose event -->
+  <div class="screen" id="m04">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m04-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/m04-bg.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m03')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="m04-heading">SO, WHEN CAN I SEE YOU?</div>
+    <div class="m04-sub">Pick the moment that works for you ♡</div>
+
+    <div class="m04-options" id="m04-options">
+      <div class="m04-option" data-option="1" onclick="selectOption(1)">
+        <div class="opt-num">01</div>
+        <div class="opt-text">Gặp Huyền tại buổi chụp ảnh tốt nghiệp (địa điểm FTU)<br>13/09/2026!</div>
+      </div>
+      <div class="m04-option" data-option="2" onclick="selectOption(2)">
+        <div class="opt-num">02</div>
+        <div class="opt-text">Gặp Huyền sau lễ tốt nghiệp tại TTHNQG<br>20/09/2026^^!</div>
+      </div>
+      <div class="m04-option" data-option="3" onclick="selectOption(3)">
+        <div class="opt-num">03</div>
+        <div class="opt-text">Tui sẽ đi cả 2 luônnn ♡</div>
+      </div>
+      <div class="m04-option" data-option="4" onclick="selectOption(4)">
+        <div class="opt-num">04</div>
+        <div class="opt-text">Awn các lịch trên đều không được rùi huhu T~T</div>
+      </div>
+    </div>
+
+    <div class="m04-note">You can always change your mind later.</div>
+  </div>
+
+  <!-- M05-1 - A little date with Huyền (Option 1) -->
+  <div class="screen bg-blue-monet" id="m05-1">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m05-1-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/4.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m04')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="content-glass">
+      <div class="m05-card" id="m05-card">
+        <div class="m05-heading">A LITTLE DATE WITH HUYỀN</div>
+        <div class="m05-day">13</div>
+        <div class="m05-month">SEPTEMBER</div>
+        <div class="m05-year">2026</div>
+        <div class="m05-time">08:30 AM</div>
+        <div class="m05-divider"></div>
+        <div class="m05-venue">FOREIGN TRADE UNIVERSITY</div>
+        <div class="m05-address">91 CHÙA LÁNG, ĐỐNG ĐA, HÀ NỘI</div>
+        <div class="m05-desc">Come take a few pictures, make some memories, and celebrate with me...</div>
+      </div>
+    </div>
+    
+    <button class="secondary-btn" onclick="window.open('https://maps.google.com/?q=Foreign+Trade+University+Hanoi','_blank')">VIEW LOCATION</button>
+    <button class="primary-btn btn-marquee" onclick="goTo('m06-1')"><span class="btn-label-sizer">TIẾP TỤC</span><span class="btn-label">TIẾP TỤC</span><span class="btn-label-marquee" aria-hidden="true">TIẾP TỤC</span></button>
+    <div class="save-link" onclick="saveCard('m05-card')">Save this ↓</div>
+  </div>
+
+  <!-- M06-1 - A little note -->
+  <div class="screen bg-blue-monet" id="m06-1">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m06-1-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/4.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m05-1')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="content-glass">
+      <div class="m06-heading">A LITTLE NOTE</div>
+      <div class="m06-sub">For our little photo day ♡</div>
+      <div class="m06-underline"></div>
+      <ul class="m06-list" id="m06-list">
+        <!-- điền động bằng JS (chèn danh xưng) -->
+      </ul>
+      <div class="m06-closing">Can't wait to see you. ♡</div>
+    </div> 
+    <button class="primary-btn btn-marquee" onclick="goTo('m07-1')"><span class="btn-label-sizer">TIẾP TỤC</span><span class="btn-label">TIẾP TỤC</span><span class="btn-label-marquee" aria-hidden="true">TIẾP TỤC</span></button>
+  </div>
+
+  <!-- M07-1 - Wish? -->
+  <div class="screen bg-blue-monet" id="m07-1">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m07-1-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/ghibli.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m06-1')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="m07-heading">ONE LAST THING ♡</div>
+    <div class="m07-question" id="m07-question"><!-- điền động bằng JS --></div>
+    <button class="choice-btn btn-marquee" onclick="goTo('m08-1')"><span class="btn-label-sizer">CÓ CHỨ ♡</span><span class="btn-label">CÓ CHỨ ♡</span><span class="btn-label-marquee" aria-hidden="true">CÓ CHỨ ♡</span></button>
+    <button class="choice-btn btn-marquee" onclick="skipWish('1')"><span class="btn-label-sizer">THUI, ĐỂ KHI GẶP RỒI CHÚC SAU HA</span><span class="btn-label">THUI, ĐỂ KHI GẶP RỒI CHÚC SAU HA</span><span class="btn-label-marquee" aria-hidden="true">THUI, ĐỂ KHI GẶP RỒI CHÚC SAU HA</span></button>
+  </div>
+
+  <!-- M08-1 - Send a little wish -->
+  <div class="screen bg-pink-monet" id="m08-1">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m08-1-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/wwave.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m07-1')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="m08-block">
+      <div class="m08-heading">A LITTLE WISH FOR MEEE ♡</div>
+      <div class="m08-underline"></div>
+      <div class="m08-textarea-wrap">
+        <textarea class="m08-textarea" id="wish-text-1" placeholder="Viết cho Huyền một vài dòng nhé.
+Anything you want to say - big or small...
+You can add a photo if you'd like. ♡"></textarea>
+        <input type="file" accept="image/*" id="wish-photo-input-1" style="display:none" onchange="previewWishPhoto(event,'1')">
+        <div class="m08-bottom-row">
+          <div class="m08-preview-wrap" id="wish-preview-wrap-1">
+            <img class="m08-preview" id="wish-preview-1">
+            <button type="button" class="m08-preview-remove" onclick="removeWishPhoto('1')">×</button>
+          </div>
+          <div class="m08-tools-group">
+            <button class="m08-tool-btn" id="draw-toggle-1" onclick="toggleDrawPanel('1')">✎</button>
+            <button class="m08-photo-btn" onclick="document.getElementById('wish-photo-input-1').click()">+</button>
+          </div>
+        </div>
+
+        <div class="m08-draw-panel" id="draw-panel-1">
+          <div class="m08-draw-canvas-wrap">
+            <canvas id="draw-canvas-1"></canvas>
+          </div>
+          <div class="m08-draw-toolbar">
+            <div class="m08-color-dot active" style="background:#f4efe9" onclick="setDrawColor('1','#f4efe9',this)"></div>
+            <div class="m08-color-dot" style="background:#e78b9b" onclick="setDrawColor('1','#e78b9b',this)"></div>
+            <div class="m08-color-dot" style="background:#f4c26b" onclick="setDrawColor('1','#f4c26b',this)"></div>
+            <div class="m08-color-dot" style="background:#8bc9e7" onclick="setDrawColor('1','#8bc9e7',this)"></div>
+            <div class="m08-color-dot" style="background:#7fd19b" onclick="setDrawColor('1','#7fd19b',this)"></div>
+            <input type="color" class="m08-color-custom" value="#f4efe9" oninput="setDrawColor('1', this.value)">
+            <button type="button" class="m08-draw-clear" onclick="clearDrawCanvas('1')">Xóa nét vẽ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="primary-btn btn-marquee" style="margin-top:20px;" onclick="sendWish('1')"><span class="btn-label-sizer">SEND MY WISH ♡</span><span class="btn-label">SEND MY WISH ♡</span><span class="btn-label-marquee" aria-hidden="true">SEND MY WISH ♡</span></button>
+  </div>
+
+  <!-- M09-1A - Final thank you (đã gửi wish) -->
+  <div class="screen bg-pink-monet" id="m09-1a">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m09-1a-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/purple.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m08-1')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="content-glass">
+      <div class="m09-heading">THANK YOU ♡</div>
+      <div class="m09-body" id="m09a-body"><!-- điền động bằng JS --></div>
+      <div class="m09-event">Can't wait to see you at FTU</div>
+      <div class="m09-datetime">13.09.2026 · 09:30 AM</div>
+      <div class="m09-signature">With love, Huyền</div>
+    </div>
+  </div>
+
+  <!-- M09-1B - Final thank you (bỏ qua wish) -->
+  <div class="screen bg-pink-monet" id="m09-1b">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m09-1b-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/purple.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m07-1')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class=" content-glass">
+      <div class="m09-heading">THANK YOU ♡</div>
+      <div class="m09-body" id="m09b-body"><!-- điền động bằng JS --></div>
+      <div class="m09-event">Can't wait to see you at FTU</div>
+      <div class="m09-datetime">13.09.2026 · 09:30 AM</div>
+      <div class="m09-signature">With love, Huyền</div>
+    </div>
+  </div>
+
+  <!-- ============ OPTION 2 - Lễ tốt nghiệp tại TTHNQG ============ -->
+
+  <!-- M05-2 -->
+  <div class="screen bg-blue-monet" id="m05-2">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m05-2-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/4.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m04')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="content-glass">
+      <div class="m05-heading">A LITTLE DATE WITH HUYỀN</div>
+      <div class="m05-day">20</div>
+      <div class="m05-month">SEPTEMBER</div>
+      <div class="m05-year">2026</div>
+      <div class="m05-time">10:30 AM</div>
+      <div class="m05-divider"></div>
+      <div class="m05-venue">NATIONAL CONVENTION CENTER</div>
+      <div class="m05-address">Phạm Hùng Street, Từ Liêm, Hà Nội, Vietnam</div>
+      <div class="m05-desc">Come take a few pictures, make some memories, and celebrate with me...</div>
+      <button class="secondary-btn" onclick="window.open('https://maps.google.com/?q=National+Convention+Center+Hanoi','_blank')">VIEW LOCATION</button>
+    </div>
+    <button class="primary-btn btn-marquee" onclick="goTo('m06-2')"><span class="btn-label-sizer">TIẾP TỤC</span><span class="btn-label">TIẾP TỤC</span><span class="btn-label-marquee" aria-hidden="true">TIẾP TỤC</span></button>
+    <div class="save-link">Save this ↓</div>
+  </div>
+
+  <!-- M06-2 -->
+  <div class="screen bg-blue-monet" id="m06-2">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m06-2-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/4.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m05-2')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="content-glass">
+      <div class="m06-heading">A LITTLE NOTE</div>
+      <div class="m06-sub">For our little photo day ♡</div>
+      <div class="m06-underline"></div>
+      <ul class="m06-list" id="m06-2-list"><!-- điền động bằng JS --></ul>
+      <div class="m06-closing">Can't wait to see you. ♡</div>
+    </div>  
+    <button class="primary-btn btn-marquee" onclick="goTo('m07-2')"><span class="btn-label-sizer">TIẾP TỤC</span><span class="btn-label">TIẾP TỤC</span><span class="btn-label-marquee" aria-hidden="true">TIẾP TỤC</span></button>
+  </div>
+
+  <!-- M07-2 -->
+  <div class="screen bg-blue-monet" id="m07-2">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m07-2-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/ghibli.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m06-2')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="m07-heading">ONE LAST THING ♡</div>
+    <div class="m07-question" id="m07-2-question"><!-- điền động bằng JS --></div>
+    <button class="choice-btn btn-marquee" onclick="goTo('m08-2')"><span class="btn-label-sizer">CÓ CHỨ ♡</span><span class="btn-label">CÓ CHỨ ♡</span><span class="btn-label-marquee" aria-hidden="true">CÓ CHỨ ♡</span></button>
+    <button class="choice-btn btn-marquee" onclick="skipWish('2')"><span class="btn-label-sizer">THUI, ĐỂ KHI GẶP RỒI CHÚC SAU HA</span><span class="btn-label">THUI, ĐỂ KHI GẶP RỒI CHÚC SAU HA</span><span class="btn-label-marquee" aria-hidden="true">THUI, ĐỂ KHI GẶP RỒI CHÚC SAU HA</span></button>
+  </div>
+
+  <!-- M08-2 -->
+  <div class="screen bg-pink-monet" id="m08-2">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m08-2-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/wwave.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m07-2')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="m08-block">
+      <div class="m08-heading">A LITTLE WISH FOR MEEE ♡</div>
+      <div class="m08-underline"></div>
+      <div class="m08-textarea-wrap">
+        <textarea class="m08-textarea" id="wish-text-2" placeholder="Viết cho Huyền một vài dòng nhé.
+Anything you want to say - big or small...
+You can add a photo if you'd like. ♡"></textarea>
+        <input type="file" accept="image/*" id="wish-photo-input-2" style="display:none" onchange="previewWishPhoto(event,'2')">
+        <div class="m08-bottom-row">
+          <div class="m08-preview-wrap" id="wish-preview-wrap-2">
+            <img class="m08-preview" id="wish-preview-2">
+            <button type="button" class="m08-preview-remove" onclick="removeWishPhoto('2')">×</button>
+          </div>
+          <div class="m08-tools-group">
+            <button class="m08-tool-btn" id="draw-toggle-2" onclick="toggleDrawPanel('2')">✎</button>
+            <button class="m08-photo-btn" onclick="document.getElementById('wish-photo-input-2').click()">+</button>
+          </div>
+        </div>
+
+        <div class="m08-draw-panel" id="draw-panel-2">
+          <div class="m08-draw-canvas-wrap">
+            <canvas id="draw-canvas-2"></canvas>
+          </div>
+          <div class="m08-draw-toolbar">
+            <div class="m08-color-dot active" style="background:#f4efe9" onclick="setDrawColor('2','#f4efe9',this)"></div>
+            <div class="m08-color-dot" style="background:#e78b9b" onclick="setDrawColor('2','#e78b9b',this)"></div>
+            <div class="m08-color-dot" style="background:#f4c26b" onclick="setDrawColor('2','#f4c26b',this)"></div>
+            <div class="m08-color-dot" style="background:#8bc9e7" onclick="setDrawColor('2','#8bc9e7',this)"></div>
+            <div class="m08-color-dot" style="background:#7fd19b" onclick="setDrawColor('2','#7fd19b',this)"></div>
+            <input type="color" class="m08-color-custom" value="#f4efe9" oninput="setDrawColor('2', this.value)">
+            <button type="button" class="m08-draw-clear" onclick="clearDrawCanvas('2')">Xóa nét vẽ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="primary-btn btn-marquee" style="margin-top:20px;" onclick="sendWish('2')"><span class="btn-label-sizer">SEND MY WISH ♡</span><span class="btn-label">SEND MY WISH ♡</span><span class="btn-label-marquee" aria-hidden="true">SEND MY WISH ♡</span></button>
+  </div>
+
+  <!-- M09-2A -->
+  <div class="screen bg-pink-monet" id="m09-2a">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m09-2a-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/purple.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m08-2')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="content-glass">
+      <div class="m09-heading">THANK YOU ♡</div>
+      <div class="m09-body" id="m09-2a-body"><!-- điền động bằng JS --></div>
+      <div class="m09-event">Can't wait to see you at NCC</div>
+      <div class="m09-datetime">20.09.2026 · 10:30 AM</div>
+      <div class="m09-signature">With love, Huyền</div>
+    </div>  
+  </div>
+
+  <!-- M09-2B -->
+  <div class="screen bg-pink-monet" id="m09-2b">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m09-2b-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/purple.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m07-2')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class=" content-glass">
+      <div class="m09-heading">THANK YOU ♡</div>
+      <div class="m09-body" id="m09-2b-body"><!-- điền động bằng JS --></div>
+      <div class="m09-event">Can't wait to see you at NCC</div>
+      <div class="m09-datetime">20.09.2026 · 10:30 AM</div>
+      <div class="m09-signature">With love, Huyền</div>
+    </div>
+  </div>
+
+  <!-- ============ OPTION 3 - Cả 2 sự kiện ============ -->
+
+  <!-- M05-3 -->
+  <div class="screen bg-blue-monet" id="m05-3">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m05-3-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/4.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m04')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class=" content-glass">
+      <div class="m05-heading">A LITTLE DATE WITH HUYỀN</div>
+      <div style="font-style:italic; font-size:12px; color:var(--cream-dim); letter-spacing:1px; margin-bottom:20px;">YOU'RE COMING TO BOTH</div>
+
+      <div class="m05-3-events">
+        <div class="m05-event-col">
+          <div class="m05-3-num">01</div>
+          <div class="m05-3-date">13 SEPTEMBER 2026</div>
+          <div class="m05-time" style="margin-bottom:6px;">08:30 AM</div>
+          <div class="m05-venue">FOREIGN TRADE UNIVERSITY</div>
+          <div class="m05-address">91 CHÙA LÁNG ĐỐNG ĐA, HÀ NỘI</div>
+          <button class="secondary-btn" onclick="window.open('https://maps.google.com/?q=Foreign+Trade+University+Hanoi','_blank')">VIEW LOCATION</button>
+        </div>
+
+        <div class="m05-3-divider-mobile"></div>
+
+        <div class="m05-event-col">
+          <div class="m05-3-num">02</div>
+          <div class="m05-3-date">20 SEPTEMBER 2026</div>
+          <div class="m05-time" style="margin-bottom:6px;">10:30 AM</div>
+          <div class="m05-venue">NATIONAL CONVENTION CENTER</div>
+          <div class="m05-address">Phạm Hùng Street, Từ Liêm, Hà Nội</div>
+          <button class="secondary-btn" onclick="window.open('https://maps.google.com/?q=National+Convention+Center+Hanoi','_blank')">VIEW LOCATION</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="m06-closing" style="margin-top:10px;">Twice the dates, twice the memories ♡</div>
+    <button class="primary-btn btn-marquee" onclick="goTo('m06-3')"><span class="btn-label-sizer">TIẾP TỤC</span><span class="btn-label">TIẾP TỤC</span><span class="btn-label-marquee" aria-hidden="true">TIẾP TỤC</span></button>
+    <div class="save-link">Save this ↓</div>
+  </div>
+
+  <!-- M06-3 -->
+  <div class="screen bg-blue-monet" id="m06-3">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m06-3-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/4.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m05-3')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="content-glass">
+      <div class="m06-heading">A LITTLE NOTE</div>
+      <div class="m06-sub">For our little photo day ♡</div>
+      <div class="m06-underline"></div>
+      <ul class="m06-list" id="m06-3-list"><!-- điền động bằng JS --></ul>
+      <div class="m06-closing">Can't wait to see you. ♡</div>
+    </div>
+    <button class="primary-btn btn-marquee" onclick="goTo('m07-3')"><span class="btn-label-sizer">TIẾP TỤC</span><span class="btn-label">TIẾP TỤC</span><span class="btn-label-marquee" aria-hidden="true">TIẾP TỤC</span></button>
+  </div>
+
+  <!-- M07-3 -->
+  <div class="screen bg-blue-monet" id="m07-3">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m07-3-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/ghibli.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m06-3')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="m07-heading">ONE LAST THING ♡</div>
+    <div class="m07-question" id="m07-3-question"><!-- điền động bằng JS --></div>
+    <button class="choice-btn btn-marquee" onclick="goTo('m08-3')"><span class="btn-label-sizer">CÓ CHỨ ♡</span><span class="btn-label">CÓ CHỨ ♡</span><span class="btn-label-marquee" aria-hidden="true">CÓ CHỨ ♡</span></button>
+    <button class="choice-btn btn-marquee" onclick="skipWish('3')"><span class="btn-label-sizer">THUI, ĐỂ KHI GẶP RỒI CHÚC SAU HA</span><span class="btn-label">THUI, ĐỂ KHI GẶP RỒI CHÚC SAU HA</span><span class="btn-label-marquee" aria-hidden="true">THUI, ĐỂ KHI GẶP RỒI CHÚC SAU HA</span></button>
+  </div>
+
+  <!-- M08-3 -->
+  <div class="screen bg-pink-monet" id="m08-3">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m08-3-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/wwave.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m07-3')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="m08-block">
+      <div class="m08-heading">A LITTLE WISH FOR MEEE ♡</div>
+      <div class="m08-underline"></div>
+      <div class="m08-textarea-wrap">
+        <textarea class="m08-textarea" id="wish-text-3" placeholder="Viết cho Huyền một vài dòng nhé.
+Anything you want to say - big or small...
+You can add a photo if you'd like. ♡"></textarea>
+        <input type="file" accept="image/*" id="wish-photo-input-3" style="display:none" onchange="previewWishPhoto(event,'3')">
+        <div class="m08-bottom-row">
+          <div class="m08-preview-wrap" id="wish-preview-wrap-3">
+            <img class="m08-preview" id="wish-preview-3">
+            <button type="button" class="m08-preview-remove" onclick="removeWishPhoto('3')">×</button>
+          </div>
+          <div class="m08-tools-group">
+            <button class="m08-tool-btn" id="draw-toggle-3" onclick="toggleDrawPanel('3')">✎</button>
+            <button class="m08-photo-btn" onclick="document.getElementById('wish-photo-input-3').click()">+</button>
+          </div>
+        </div>
+
+        <div class="m08-draw-panel" id="draw-panel-3">
+          <div class="m08-draw-canvas-wrap">
+            <canvas id="draw-canvas-3"></canvas>
+          </div>
+          <div class="m08-draw-toolbar">
+            <div class="m08-color-dot active" style="background:#f4efe9" onclick="setDrawColor('3','#f4efe9',this)"></div>
+            <div class="m08-color-dot" style="background:#e78b9b" onclick="setDrawColor('3','#e78b9b',this)"></div>
+            <div class="m08-color-dot" style="background:#f4c26b" onclick="setDrawColor('3','#f4c26b',this)"></div>
+            <div class="m08-color-dot" style="background:#8bc9e7" onclick="setDrawColor('3','#8bc9e7',this)"></div>
+            <div class="m08-color-dot" style="background:#7fd19b" onclick="setDrawColor('3','#7fd19b',this)"></div>
+            <input type="color" class="m08-color-custom" value="#f4efe9" oninput="setDrawColor('3', this.value)">
+            <button type="button" class="m08-draw-clear" onclick="clearDrawCanvas('3')">Xóa nét vẽ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="primary-btn btn-marquee" style="margin-top:20px;" onclick="sendWish('3')"><span class="btn-label-sizer">SEND MY WISH ♡</span><span class="btn-label">SEND MY WISH ♡</span><span class="btn-label-marquee" aria-hidden="true">SEND MY WISH ♡</span></button>
+  </div>
+
+  <!-- M09-3A -->
+  <div class="screen bg-pink-monet" id="m09-3a">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m09-3a-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/purple.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m08-3')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="content-glass">
+      <div class="m09-heading">THANK YOU ♡</div>
+      <div class="m09-body" id="m09-3a-body"><!-- điền động bằng JS --></div>
+      <div class="m09-event">Can't wait to see you<br>at both FTU & NCC</div>
+      <div class="m09-datetime">13.09.2026 · 09:30 AM<br>20.09.2026 · 10:30 AM</div>
+      <div class="m09-signature">With love, Huyền</div>
+    </div>
+  </div>
+
+  <!-- M09-3B -->
+  <div class="screen bg-pink-monet" id="m09-3b">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m09-3b-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/purple.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m07-3')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="content-glass">
+      <div class="m09-heading">THANK YOU ♡</div>
+      <div class="m09-body" id="m09-3b-body"><!-- điền động bằng JS --></div>
+      <div class="m09-event">Can't wait to see you<br>at both FTU & NCC</div>
+      <div class="m09-datetime">13.09.2026 · 09:30 AM<br>20.09.2026 · 10:30 AM</div>
+      <div class="m09-signature">With love, Huyền</div>
+    </div>
+  </div>
+
+  <!-- ============ OPTION 4 - Không thể tham dự ============ -->
+
+  <!-- M08-R -->
+  <div class="screen bg-pink-monet" id="m08-r">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m08-r-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/wwave.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m04')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="m08-block">
+      <div class="m08-heading">A LITTLE WISH FOR MEEE ♡</div>
+      <div class="m08-underline"></div>
+      <div class="m08-textarea-wrap">
+        <textarea class="m08-textarea" id="wish-text-4" placeholder="Viết cho Huyền một vài dòng nhé.
+Anything you want to say - big or small...
+You can add a photo if you'd like. ♡"></textarea>
+        <input type="file" accept="image/*" id="wish-photo-input-4" style="display:none" onchange="previewWishPhoto(event,'4')">
+        <div class="m08-bottom-row">
+          <div class="m08-preview-wrap" id="wish-preview-wrap-4">
+            <img class="m08-preview" id="wish-preview-4">
+            <button type="button" class="m08-preview-remove" onclick="removeWishPhoto('4')">×</button>
+          </div>
+          <div class="m08-tools-group">
+            <button class="m08-tool-btn" id="draw-toggle-4" onclick="toggleDrawPanel('4')">✎</button>
+            <button class="m08-photo-btn" onclick="document.getElementById('wish-photo-input-4').click()">+</button>
+          </div>
+        </div>
+
+        <div class="m08-draw-panel" id="draw-panel-4">
+          <div class="m08-draw-canvas-wrap">
+            <canvas id="draw-canvas-4"></canvas>
+          </div>
+          <div class="m08-draw-toolbar">
+            <div class="m08-color-dot active" style="background:#f4efe9" onclick="setDrawColor('4','#f4efe9',this)"></div>
+            <div class="m08-color-dot" style="background:#e78b9b" onclick="setDrawColor('4','#e78b9b',this)"></div>
+            <div class="m08-color-dot" style="background:#f4c26b" onclick="setDrawColor('4','#f4c26b',this)"></div>
+            <div class="m08-color-dot" style="background:#8bc9e7" onclick="setDrawColor('4','#8bc9e7',this)"></div>
+            <div class="m08-color-dot" style="background:#7fd19b" onclick="setDrawColor('4','#7fd19b',this)"></div>
+            <input type="color" class="m08-color-custom" value="#f4efe9" oninput="setDrawColor('4', this.value)">
+            <button type="button" class="m08-draw-clear" onclick="clearDrawCanvas('4')">Xóa nét vẽ</button>
+          </div>
+        </div>
+      </div>
+      <div id="m08-r-note" style="font-size:12.5px; color:var(--cream-dim); margin-top:14px; line-height:1.6;"><!-- điền động bằng JS --></div>
+    </div>
+    <button class="primary-btn btn-marquee" style="margin-top:20px;" onclick="sendWish('4')"><span class="btn-label-sizer">SEND MY WISH ♡</span><span class="btn-label">SEND MY WISH ♡</span><span class="btn-label-marquee" aria-hidden="true">SEND MY WISH ♡</span></button>
+  </div>
+
+  <!-- M09-4 -->
+  <div class="screen bg-pink-monet" id="m09-4">
+    <!-- VIDEO NỀN: đổi đường dẫn "Videos/m09-4-bg.mp4" thành đúng file video của bạn -->
+    <video class="screen-bg-video" preload="none" muted loop playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+      <source data-src="Videos/purple.mp4" type="video/mp4">
+    </video>
+    <div class="back-btn" onclick="goTo('m08-r')">← Back</div>
+    <div class="screen-star">✦</div>
+    <div class="content-glass">
+      <div class="m09-heading">THANK YOU ♡</div>
+      <div class="m09-body" id="m09-4-body" style="margin-bottom:16px;"><!-- điền động bằng JS --></div>
+      <div style="font-size:14px; color:var(--cream-dim); max-width:280px; line-height:1.8; margin-bottom:16px;">
+        Wish I could see you there ♡<br>
+        But your sweet words mean a lot to me.
+      </div>
+      <div style="font-size:14px; color:var(--cream-dim); max-width:280px; line-height:1.8; margin-bottom:40px;" id="m09-4-closing"><!-- điền động bằng JS --></div>
+      <div class="m09-signature">With love, Huyền</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ============================================================
+  // CẤU HÌNH
+  // ============================================================
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzpOpuDldq7qsTycHBfQO3SCak2zk5yhmeCKHILTo_oTq1Zzs53x9Qg5OJd8AMh15c-Tg/exec";
+
+  // ============================================================
+  // ID người dùng - tạo 1 lần, lưu lại để lần sau quay lại không tạo dòng mới
+  // ============================================================
+  function getOrCreateUserId(){
+    try{
+      let id = localStorage.getItem("huyen_guest_id");
+      if(!id){
+        id = Math.random().toString(36).substring(2, 8);
+        localStorage.setItem("huyen_guest_id", id);
+      }
+      return id;
+    }catch(e){
+      // Nếu trình duyệt chặn localStorage, vẫn tạo ID tạm cho phiên này
+      if(!window.__tempId) window.__tempId = Math.random().toString(36).substring(2, 8);
+      return window.__tempId;
+    }
+  }
+
+  // ============================================================
+  // Chuyển màn hình
+  // ============================================================
+  // ============================================================
+  // Lazy-load video nền: chỉ tải & phát video của màn đang hiện,
+  // tránh trình duyệt tải cùng lúc toàn bộ video (rất nặng & chậm).
+  // ============================================================
+  function loadAndPlayVideo(screenEl){
+    if(!screenEl) return;
+    const video = screenEl.querySelector('video.screen-bg-video');
+    if(!video) return;
+    const source = video.querySelector('source');
+    if(source && !source.getAttribute('src') && source.dataset.src){
+      source.setAttribute('src', source.dataset.src);
+      video.load();
+    }
+    video.play().catch(() => {});
+  }
+
+  function pauseVideo(screenEl){
+    if(!screenEl) return;
+    const video = screenEl.querySelector('video.screen-bg-video');
+    if(video) video.pause();
+  }
+
+  // ============================================================
+  // Chuyển màn hình
+  // ============================================================
+  function goTo(screenId){
+    const current = document.querySelector('.screen.active');
+    pauseVideo(current);
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const next = document.getElementById(screenId);
+    next.classList.add('active');
+    loadAndPlayVideo(next);
+  }
+
+  // Bấm mũi tên xuống ở M00 -> qua M01
+  document.getElementById('m00').addEventListener('click', () => goTo('m01'));
+
+  // Tải & phát video của màn đầu tiên (M00) ngay khi trang vừa mở
+  document.addEventListener('DOMContentLoaded', () => {
+    loadAndPlayVideo(document.getElementById('m00'));
+    // Sau khi màn đầu tiên đã bắt đầu phát, âm thầm tải trước (prefetch)
+    // các video còn lại ở chế độ nền -> khi khách bấm sang màn kế tiếp,
+    // video gần như đã có sẵn trong cache của trình duyệt, không phải
+    // đợi tải lại từ đầu như trước.
+    setTimeout(startBackgroundPrefetch, 1500);
+  });
+
+  // ============================================================
+  // Prefetch video nền — dùng <link rel="prefetch"> của trình duyệt
+  // thay vì fetch() thủ công. Lý do: fetch() chạy ở mức ưu tiên
+  // BÌNH THƯỜNG nên tranh băng thông với video đang phát trên màn
+  // hình, làm nó load chậm đi. <link rel="prefetch"> được trình
+  // duyệt tự xếp ở mức ưu tiên THẤP NHẤT, luôn nhường cho video/ảnh
+  // đang hiển thị, chỉ âm thầm tải khi mạng còn rảnh.
+  // ============================================================
+  function startBackgroundPrefetch(){
+    const seen = new Set();
+    document.querySelectorAll('.screen video.screen-bg-video source').forEach(source => {
+      const url = source.dataset.src;
+      if(url && !seen.has(url)){
+        seen.add(url);
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.as = 'video';
+        link.href = url;
+        document.head.appendChild(link);
+      }
+    });
+  }
+
+  // ============================================================
+  // Toast thông báo nhỏ
+  // ============================================================
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  // ============================================================
+  // Điền nội dung động cho M02 (dùng Tên + Danh xưng vừa nhập ở M01)
+  // ============================================================
+  function renderM02(){
+    const { name, relation } = window.guestData || { name:"", relation:"Bạn" };
+    const box = document.getElementById('m02-text');
+    box.innerHTML = `
+      Gửi ${relation} ${name},<br><br>
+      Cảm ơn vì đã đồng hành cùng Huyền trong suốt 4 năm đại học.
+      Có lẽ sẽ chẳng thể kể hết những điều đã xảy ra trong khoảng thời gian ấy,
+      nhưng Huyền thật sự rất biết ơn vì đã có ${relation} ở bên...
+    `;
+  }
+
+  // ============================================================
+  // Điền tên khách ở M03 (chuyển màn từ M02 -> M03)
+  // ============================================================
+  function renderM03(){
+    const { name } = window.guestData || { name:"" };
+    document.getElementById('m03-guest-name').textContent = name ? name + "." : "";
+  }
+
+  // ============================================================
+  // Lưu card (ngày giờ, địa điểm) thành ảnh PNG để khách tải về máy
+  // ============================================================
+  function saveCard(elementId){
+    const el = document.getElementById(elementId);
+    showToast("Đang tạo ảnh...");
+
+    html2canvas(el, {
+      backgroundColor: null,
+      scale: 2 // ảnh nét hơn
+    }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = 'huyen-graduation-invite.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      showToast("Đã lưu ảnh ♡");
+    }).catch(err => {
+      showToast("Không lưu được ảnh, thử lại nhé");
+      console.error(err);
+    });
+  }
+
+  // ============================================================
+  // Điền nội dung động cho nhánh Option 1 (M06-1, M07-1)
+  // ============================================================
+  function renderM06_1(){
+    const { relation } = window.guestData || { relation:"Bạn" };
+    const list = document.getElementById('m06-list');
+    list.innerHTML = `
+      <li>Đến FTU trước một chút nếu có thể để mình có thêm thời gian gặp nhau.</li>
+      <li>Hôm đó cứ mặc bộ đồ mà ${relation} cảm thấy xinh/đẹp nhất nhé.</li>
+      <li>Nếu có máy ảnh / máy film thì mang theo luôn nha =)))</li>
+      <li>Và nhớ giữ thật nhiều năng lượng để chụp ảnh cùng Huyền nha!</li>
+    `;
+  }
+
+  function renderM07_1(){
+    const { relation } = window.guestData || { relation:"Bạn" };
+    document.getElementById('m07-question').textContent = `${relation} có muốn gửi lời chúc tới Huyền hong?`;
+  }
+
+  function renderM06_2(){
+    const { relation } = window.guestData || { relation:"Bạn" };
+    document.getElementById('m06-2-list').innerHTML = `
+      <li>Đến TTHNQG trước một chút nếu có thể để mình có thêm thời gian gặp nhau.</li>
+      <li>Hôm đó cứ mặc bộ đồ mà ${relation} cảm thấy xinh/đẹp nhất nhé.</li>
+      <li>Nếu có máy ảnh / máy film thì mang theo luôn nha =)))</li>
+      <li>Và nhớ giữ thật nhiều năng lượng để chụp ảnh cùng Huyền nha!</li>
+    `;
+  }
+  function renderM07_2(){
+    const { relation } = window.guestData || { relation:"Bạn" };
+    document.getElementById('m07-2-question').textContent = `${relation} có muốn gửi lời chúc tới Huyền hong?`;
+  }
+
+  function renderM06_3(){
+    const { relation } = window.guestData || { relation:"Bạn" };
+    document.getElementById('m06-3-list').innerHTML = `
+      <li>Đến địa điểm trước một chút nếu có thể để mình có thêm thời gian gặp nhau.</li>
+      <li>Hôm đó cứ mặc bộ đồ mà ${relation} cảm thấy xinh/đẹp nhất nhé.</li>
+      <li>Nếu có máy ảnh / máy film thì mang theo luôn nha =)))</li>
+      <li>Và nhớ giữ thật nhiều năng lượng để chụp ảnh cùng Huyền nha!</li>
+    `;
+  }
+  function renderM07_3(){
+    const { relation } = window.guestData || { relation:"Bạn" };
+    document.getElementById('m07-3-question').textContent = `${relation} có muốn gửi lời chúc tới Huyền hong?`;
+  }
+
+  function renderM08R(){
+    const { relation } = window.guestData || { relation:"Bạn" };
+    document.getElementById('m08-r-note').innerHTML =
+      `Thật tiếc vì ${relation} không thể tham dự được :&lt; tui rất buồn đó huhu vậy ${relation} hãy viết cho Huyền một vài dòng nha O_O`;
+  }
+
+  // ============================================================
+  // Ảnh xem trước khi đính kèm lời chúc
+  // ============================================================
+  let wishPhotoBase64 = null;
+  function previewWishPhoto(e, branch){
+    const suffix = branch ? '-' + branch : '';
+    const file = e.target.files[0];
+    if(!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      // Nén nhỏ ảnh lại (tối đa 1000px chiều rộng, chất lượng 80%)
+      // để không gửi ảnh gốc quá nặng lên Google Drive.
+      const image = new Image();
+      image.onload = function(){
+        const maxWidth = 1000;
+        const scale = Math.min(1, maxWidth / image.width);
+        const canvas = document.createElement('canvas');
+        canvas.width = image.width * scale;
+        canvas.height = image.height * scale;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+        wishPhotoBase64 = canvas.toDataURL('image/jpeg', 0.8);
+
+        document.getElementById('wish-preview' + suffix).src = wishPhotoBase64;
+        document.getElementById('wish-preview-wrap' + suffix).style.display = 'inline-block';
+      };
+      image.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ============================================================
+  // Xóa ảnh vừa chọn (trước khi gửi lời chúc)
+  // ============================================================
+  function removeWishPhoto(branch){
+    const suffix = branch ? '-' + branch : '';
+    wishPhotoBase64 = null;
+    document.getElementById('wish-preview' + suffix).src = '';
+    document.getElementById('wish-preview-wrap' + suffix).style.display = 'none';
+    document.getElementById('wish-photo-input' + suffix).value = '';
+  }
+
+  // ============================================================
+  // TÍNH NĂNG VẼ TAY trong lời chúc
+  // ============================================================
+  const drawState = {}; // lưu trạng thái vẽ riêng cho từng nhánh (1/2/3/4)
+
+  function toggleDrawPanel(branch){
+    const panel = document.getElementById('draw-panel-' + branch);
+    const btn = document.getElementById('draw-toggle-' + branch);
+    const isOpen = panel.style.display === 'block';
+
+    if(isOpen){
+      panel.style.display = 'none';
+      btn.classList.remove('active');
+    } else {
+      panel.style.display = 'block';
+      btn.classList.add('active');
+      if(!drawState[branch]){
+        initDrawCanvas(branch);
+      }
+    }
+  }
+
+  function initDrawCanvas(branch){
+    const canvas = document.getElementById('draw-canvas-' + branch);
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+
+    const ctx = canvas.getContext('2d');
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#f4efe9';
+
+    const state = { canvas, ctx, hasContent:false, drawing:false };
+    drawState[branch] = state;
+
+    canvas.addEventListener('pointerdown', (e) => {
+      state.drawing = true;
+      state.hasContent = true;
+      ctx.beginPath();
+      ctx.moveTo(e.offsetX, e.offsetY);
+    });
+    canvas.addEventListener('pointermove', (e) => {
+      if(!state.drawing) return;
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+    });
+    const stopDrawing = () => { state.drawing = false; };
+    canvas.addEventListener('pointerup', stopDrawing);
+    canvas.addEventListener('pointerleave', stopDrawing);
+    canvas.addEventListener('pointercancel', stopDrawing);
+  }
+
+  function setDrawColor(branch, color, dotEl){
+    const state = drawState[branch];
+    if(state){ state.ctx.strokeStyle = color; }
+    const panel = document.getElementById('draw-panel-' + branch);
+    if(panel){
+      panel.querySelectorAll('.m08-color-dot').forEach(d => d.classList.remove('active'));
+      if(dotEl) dotEl.classList.add('active');
+    }
+  }
+
+  function clearDrawCanvas(branch){
+    const state = drawState[branch];
+    if(!state) return;
+    state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
+    state.hasContent = false;
+  }
+
+  function closeDrawPanel(branch){
+    const panel = document.getElementById('draw-panel-' + branch);
+    const btn = document.getElementById('draw-toggle-' + branch);
+    if(panel) panel.style.display = 'none';
+    if(btn) btn.classList.remove('active');
+    clearDrawCanvas(branch);
+  }
+
+  // Ghép ảnh đã upload + nét vẽ tay thành 1 ảnh duy nhất (nếu có cả 2)
+  function combinePhotoAndDrawing(photoDataUrl, drawingDataUrl){
+    return new Promise((resolve) => {
+      const baseImg = new Image();
+      baseImg.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = baseImg.width;
+        canvas.height = baseImg.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(baseImg, 0, 0);
+
+        const drawImg = new Image();
+        drawImg.onload = () => {
+          ctx.drawImage(drawImg, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL('image/jpeg', 0.85));
+        };
+        drawImg.src = drawingDataUrl;
+      };
+      baseImg.src = photoDataUrl;
+    });
+  }
+
+  // Lấy ảnh cuối cùng sẽ gửi đi: ảnh upload / nét vẽ / cả 2 ghép lại / không có gì
+function getFinalWishImage(branch){
+  const state = drawState[branch];
+  const hasDrawing = state && state.hasContent;
+  const drawingData = hasDrawing ? state.canvas.toDataURL('image/png') : "";
+
+  return Promise.resolve({
+    photo: wishPhotoBase64 || "",
+    drawing: drawingData
+  });
+}
+
+  // ============================================================
+  // Gửi lời chúc (Wish) lên Sheet -> Status = Completed
+  // branch: '1' | '2' | '3' | '4'
+  // ============================================================
+function sendWish(branch){
+  const data = window.guestData;
+  const wishText = document.getElementById('wish-text-' + branch).value.trim();
+
+  if(!data || !data.id){
+    showToast("Thiếu thông tin, quay lại bước trước nhé");
+    return;
+  }
+
+  getFinalWishImage(branch).then(images => {
+    fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify({
+        id: data.id,
+        wish: wishText,
+        photo: images.photo,
+        drawing: images.drawing,
+        status: "Completed"
+      })
+    })
+      .then(() => {
+        removeWishPhoto(branch);   // ẩn ảnh preview + xóa input file, tránh dính ảnh cũ ở lần sau
+        closeDrawPanel(branch);    // đóng khung vẽ + xóa nét vẽ cũ
+        document.getElementById('wish-text-' + branch).value = ""; // xóa luôn nội dung đã viết
+        if(branch === '4'){
+          renderM09_4();
+          goTo('m09-4');
+        } else {
+          renderM09Body('a', branch);
+          goTo('m09-' + branch + 'a');
+        }
+      })
+      .catch(err => {
+        showToast("Có lỗi mạng, thử lại nhé");
+        console.error(err);
+      });
+    });
+  }
+
+  // ============================================================
+  // Bỏ qua wish -> Status = Completed luôn, không có nội dung Wish
+  // branch: '1' | '2' | '3'  (Option 4 không có bước bỏ qua)
+  // ============================================================
+  function skipWish(branch){
+    const data = window.guestData;
+    if(!data || !data.id){
+      showToast("Thiếu thông tin, quay lại bước trước nhé");
+      return;
+    }
+
+    fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify({
+        id: data.id,
+        status: "Completed"
+      })
+    })
+    .then(() => {
+      renderM09Body('b', branch);
+      goTo('m09-' + branch + 'b');
+    })
+    .catch(err => {
+      showToast("Có lỗi mạng, thử lại nhé");
+      console.error(err);
+    });
+  }
+
+  // ============================================================
+  // Điền nội dung động cho M09 (Thank you) - dùng chung Option 1/2/3
+  // Giả định: A = đã gửi wish (cảm ơn vì lời chúc)
+  //           B = bỏ qua wish (lời cảm ơn chung, không nhắc tới wish)
+  // ============================================================
+  function renderM09Body(variant, branch){
+    const { relation } = window.guestData || { relation:"Bạn" };
+    const elId = (branch === '1')
+      ? (variant === 'a' ? 'm09a-body' : 'm09b-body')
+      : `m09-${branch}${variant}-body`;
+    const el = document.getElementById(elId);
+    if(!el) return;
+    if(variant === 'a'){
+      el.textContent = `Cảm ơn ${relation} vì lời chúc dành cho Huyền nha!`;
+    } else {
+      el.textContent = `Cảm ơn ${relation} vì đã dành thời gian ghé qua nha!`;
+    }
+  }
+
+  // ============================================================
+  // Điền nội dung động cho M09-4 (nhánh không thể tham dự)
+  // ============================================================
+  function renderM09_4(){
+    const { relation } = window.guestData || { relation:"Bạn" };
+    document.getElementById('m09-4-body').textContent =
+      `Cảm ơn ${relation} vì lời chúc dành cho Huyền nha!`;
+    document.getElementById('m09-4-closing').textContent =
+      `Hẹn gặp ${relation} vào một dịp gần nhất nhé!`;
+  }
+
+  // ============================================================
+  // Chọn Option ở M04 -> gửi update lên Google Sheet
+  // ============================================================
+  function selectOption(optionNumber){
+    document.querySelectorAll('.m04-option').forEach(el => el.classList.remove('selected'));
+    document.querySelector(`.m04-option[data-option="${optionNumber}"]`).classList.add('selected');
+
+    const data = window.guestData;
+    if(!data || !data.id){
+      showToast("Thiếu thông tin, quay lại bước trước nhé");
+      return;
+    }
+    window.guestData.option = optionNumber;
+
+    fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify({
+        id: data.id,
+        name: data.name,
+        phone: data.phone,
+        relation: data.relation,
+        option: optionNumber
+      })
+    })
+    .then(() => {
+      showToast("Đã ghi nhận lựa chọn ♡");
+      console.log("Đã cập nhật option:", optionNumber);
+
+      setTimeout(() => {
+        if(optionNumber === 1){
+          renderM06_1(); renderM07_1();
+          goTo('m05-1');
+        } else if(optionNumber === 2){
+          renderM06_2(); renderM07_2();
+          goTo('m05-2');
+        } else if(optionNumber === 3){
+          renderM06_3(); renderM07_3();
+          goTo('m05-3');
+        } else if(optionNumber === 4){
+          renderM08R();
+          goTo('m08-r');
+        }
+      }, 400);
+    })
+    .catch(err => {
+      showToast("Có lỗi mạng, thử lại nhé");
+      console.error(err);
+    });
+  }
+
+  // ============================================================
+  // Đổi chữ hiển thị trên nút có hiệu ứng marquee (3 lớp span)
+  // mà không phá cấu trúc HTML bên trong nút.
+  // ============================================================
+  function setBtnLabel(btn, text){
+    btn.querySelectorAll('.btn-label-sizer, .btn-label, .btn-label-marquee').forEach(span => {
+      span.textContent = text;
+    });
+  }
+
+  // ============================================================
+  // Gửi dữ liệu M01 lên Google Sheet
+  // ============================================================
+  function submitM01(){
+    const name = document.getElementById('inp-name').value.trim();
+    const phone = document.getElementById('inp-phone').value.trim();
+    const relation = document.getElementById('inp-relation').value;
+    const btn = document.getElementById('btn-continue');
+
+    if(!name || !phone){
+      showToast("Bạn nhập tên và số điện thoại nhé ♡");
+      return;
+    }
+
+    const id = getOrCreateUserId();
+    btn.disabled = true;
+    setBtnLabel(btn, "ĐANG GỬI...");
+
+    fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors", // Apps Script không trả CORS header, dùng no-cors để tránh bị chặn
+      body: JSON.stringify({ id, name, phone, relation })
+    })
+    .then(() => {
+      // Với no-cors mình không đọc được nội dung phản hồi,
+      // nhưng nếu không lỗi network thì coi như đã gửi thành công.
+      btn.disabled = false;
+      setBtnLabel(btn, "TIẾP TỤC");
+
+      // Lưu lại thông tin để dùng cho các màn sau (M02, M09...)
+      window.guestData = { id, name, phone, relation };
+
+      renderM02();
+      goTo('m02');
+      console.log("Đã gửi:", { id, name, phone, relation });
+    })
+    .catch(err => {
+      btn.disabled = false;
+      setBtnLabel(btn, "TIẾP TỤC");
+      showToast("Có lỗi mạng, thử lại nhé");
+      console.error(err);
+    });
+  }
+
+  // ============================================================
+  // Căn chỉnh hiệu ứng marquee cho khớp với độ dài chữ của TỪNG nút
+  // (nút ngắn như "TIẾP TỤC" và nút dài như "THUI, ĐỂ KHI GẶP RỒI
+  // CHÚC SAU HA" cần khoảng chạy khác nhau để không bị hụt/giật).
+  // ============================================================
+  function initMarqueeButtons(){
+    document.querySelectorAll('.btn-marquee').forEach(btn => {
+      const sizer = btn.querySelector('.btn-label-sizer');
+      if(!sizer) return;
+      const width = sizer.offsetWidth + 32; // + khoảng cách đệm giữa các lượt chạy
+      const marqueeEl = btn.querySelector('.btn-label-marquee');
+      if(marqueeEl){
+        marqueeEl.style.setProperty('--btn-spacing', width + 'px');
+      }
+    });
+  }
+  window.addEventListener('load', initMarqueeButtons);
+  window.addEventListener('resize', initMarqueeButtons);
+</script>
+
+</body>
+</html>
